@@ -23,17 +23,17 @@ const socketIo = require("socket.io");
 // create an express application:
 const app = express();
 
-const serverOptions = {
-  key: fs.readFileSync(
-    "/etc/letsencrypt/live/labbee.beanalytic.com/privkey.pem"
-  ),
-  cert: fs.readFileSync(
-    "/etc/letsencrypt/live/labbee.beanalytic.com/fullchain.pem"
-  ),
-};
+// const serverOptions = {
+//   key: fs.readFileSync(
+//     "/etc/letsencrypt/live/labbee.beanalytic.com/privkey.pem"
+//   ),
+//   cert: fs.readFileSync(
+//     "/etc/letsencrypt/live/labbee.beanalytic.com/fullchain.pem"
+//   ),
+// };
 
-// const server = http.createServer(app);
-const server = https.createServer(serverOptions, app);
+const server = http.createServer(app);
+//const server = https.createServer(serverOptions, app);
 
 ///Make the app.connection available to the socket.io server:
 // const io = socketIo(server);
@@ -166,6 +166,7 @@ const {
   createChambersForSlotBookingTable,
   createSlotBookingTable,
   createPoStatusTable,
+  createCTRFTable,
 } = require("./database_tables");
 
 //Get db connection from the db.js file
@@ -200,6 +201,8 @@ db.getConnection(function (err, connection) {
   createChambersForSlotBookingTable();
   createSlotBookingTable();
   createPoStatusTable();
+
+  createCTRFTable();
 
   connection.release(); // Release the connection back to the pool when done
 });
@@ -243,6 +246,10 @@ slotBookingAPIs(app, io, labbeeUsers);
 // backend connection of po_invoice data API's from 'PoInvoiceBackend' page
 const { poInvoiceBackendAPIs } = require("./PoInvoiceBackend");
 poInvoiceBackendAPIs(app);
+
+// backend connection of EMI_EMC data API's from 'emi_emc' page
+const { emiEmcAPIs } = require("./emi_emc");
+emiEmcAPIs(app, io, labbeeUsers);
 
 /// Code to get backup of only database in .sql format:
 ///Data Backup function:
@@ -297,8 +304,8 @@ app.get("/", (req, res) => {
   res.send("Hello Welcome to Labbee...");
 });
 
-const PORT = 4002; //For deployment
-//const PORT = 4000;
+//const PORT = 4002; //For deployment
+const PORT = 4000;
 
 app.get("/api/testing", (req, res) => {
   res.send("Backend is up and running...");

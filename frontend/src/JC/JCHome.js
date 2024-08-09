@@ -633,6 +633,10 @@ export default function JCHome() {
             jcClosedCount++;
             break;
 
+          case "Closed":
+            jcClosedCount++;
+            break;
+
           case "Test Completed":
             jcTestCompletedCount++;
             break;

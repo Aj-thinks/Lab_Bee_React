@@ -263,7 +263,7 @@ export default function SidenavigationBar() {
       i: 9,
       label: "EMI/EMC JC",
       icon: <TrackChangesIcon />,
-      path: "/emi_jobcard",
+      path: "/emi-emc-jc",
       gradientId: "emiGradient",
     },
   ];

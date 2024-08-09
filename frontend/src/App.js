@@ -43,6 +43,7 @@ import { serverBaseAddress } from "./Pages/APIPage";
 import { NotificationContext } from "./Pages/NotificationContext";
 import NotificationsManagement from "./Pages/NotificationsManagement";
 import EmiJobcard from "./EMI/EmiJobcard";
+import CreateCTRF from "./EMI/CreateCTRF";
 
 function App() {
   const location = useLocation();
@@ -134,6 +135,7 @@ function App() {
         <Route path="/" exact element={<Login />} />
         <Route path="/register" exact element={<Register />} />
         <Route path="/reset_password" exact element={<ResetPassword />} />
+        {/* <Route path="/new-ctrf" exact element={<CreateCTRF />} /> */}
 
         {/* Protected Routes */}
         <Route path="" element={<SidenavigationBar />}>
@@ -280,7 +282,7 @@ function App() {
           />
 
           <Route
-            path="emi_jobcard"
+            path="emi-emc-jc"
             element={
               <ProtectedRoute
                 allowedDepartments={[
@@ -290,6 +292,20 @@ function App() {
                 ]}
               >
                 <EmiJobcard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="create-new-ctrf"
+            element={
+              <ProtectedRoute
+                allowedDepartments={[
+                  "Administration",
+                  "Accounts",
+                  "TS2 Testing",
+                ]}
+              >
+                <CreateCTRF />
               </ProtectedRoute>
             }
           />

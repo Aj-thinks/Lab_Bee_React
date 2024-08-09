@@ -553,6 +553,33 @@ function createPoStatusTable() {
   });
 }
 
+////////////////////////////////////////////////////////////////////////////////////
+//Function to create CTRF table:
+
+function createCTRFTable() {
+  const createCTRFTableQuery = `
+    CREATE TABLE IF NOT EXISTS ctrf_table (
+        id INT NOT NULL AUTO_INCREMENT,
+        company_id VARCHAR(255),
+        ctrf_referance_id VARCHAR(255),
+        ctrf_link VARCHAR(255),
+        ctrf_created_by VARCHAR(255),
+        ctrf_status VARCHAR(255),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        deleted_at TIMESTAMP DEFAULT NULL,
+        PRIMARY KEY(id) 
+    )`;
+
+  db.query(createCTRFTableQuery, function (err, result) {
+    if (err) {
+      console.error("Error while creating ctrf_table", err);
+    } else {
+      //console.log("CTRF table created successfully.")
+    }
+  });
+}
+
 // Handle the process exiting to gracefully end the connection pool.
 process.on("exit", function () {
   db.end(function (err) {
@@ -586,4 +613,6 @@ module.exports = {
   createChambersForSlotBookingTable,
   createSlotBookingTable,
   createPoStatusTable,
+
+  createCTRFTable,
 };
